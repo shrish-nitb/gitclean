@@ -14,8 +14,8 @@
 # Both <repo_url> and <path_to_bfg_jar> are optional, if not provided it will download the BFG Repo-Cleaner from the internet.
 # --dry-run is an optional flag to skip committing and pushing changes after cleaning. Hence, it will only clean the repository and not push the changes to the remote repository. If not provided the script will commit and push the changes to the remote repository.
 # --bfg is an optional argument to provide the path to the BFG Repo-Cleaner JAR file. If not provided, it will download the BFG Repo-Cleaner from the internet.
-
-# shrish108@gmail.com
+    
+# email: shrish108@gmail.com
                
 import os
 import subprocess
@@ -356,6 +356,7 @@ def main():
         print("gitclean v0.1.0-beta")
         print("A CLI tool for cleaning git repositories that may contain sensitive information such as API keys, passwords, or other secrets.")
         print("https://github.com/shrish-nitb/gitclean")
+       
 
         print("For help run gitclean --help")
         
@@ -472,11 +473,11 @@ def main():
         mirror_path = os.path.abspath(mirror_dir)
 
         while True:
-            logging.info("\n==== Main Menu ====")
-            logging.info("1. Clean HEAD of important branches like release, master etc (Step 1)")
-            logging.info("2. Clean commit history using BFG Repo-Cleaner (Step 2)")
-            logging.info("3. Clean commit history using git-filter-repo (Step 2)")
-            logging.info("4. Exit")
+            print("\n==== Main Menu ====")
+            print("1. Clean HEAD of important branches like release, master etc (Step 1)")
+            print("2. Clean commit history using BFG Repo-Cleaner (Step 2)")
+            print("3. Clean commit history using git-filter-repo (Step 2)")
+            print("4. Exit")
             choice = input("Enter your choice (1/2/3/4): ").strip()
 
             if choice == "1":
