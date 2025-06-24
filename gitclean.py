@@ -159,7 +159,7 @@ def gitfilter_repo(repo_url, repo_name, work_dir, dry_run=False):
         return
 
     if shutil.which("git-filter-repo") is None:
-        logging.error("git-filter-repo is not installed.")
+        logging.error("git-filter-repo is not installed. brew install git-filter-repo")
         return
 
     logging.info("Running git-filter-repo...")
