@@ -1,0 +1,44 @@
+🔐 Sensitive Data Cleanup Plan: Important Notes
+    ✅ Before Starting the Cleanup
+        Notify all developers: Ask everyone to push any pending changes immediately and to stop all coding and pushing until the cleanup is complete.
+        Once all developers have pushed, disable push access (temporarily) for all contributors to prevent accidental pushes during the cleanup.
+        If branch protections prevent force pushes, those rules will need to be temporarily disabled so the cleaned history can be pushed (forcefully) to all branches and tags.
+
+    🧹 After Cleanup
+        The cleaned (sacred) repository should be treated as the new source of truth.
+        Do not push from any stale local clones (those based on old history) — they may reintroduce sensitive data.
+
+    🔁 Instead, all users must re-clone the repository from the updated remote after cleanup.
+
+    ⚠️ Known Issues / Limitations
+        🧨 Broken Diff Views (GitHub/GitLab)
+            After history is rewritten, diff views for closed pull requests may break, including:
+            The PR that introduced the sensitive data.
+            Any PR built on commits following that PR (e.g., commits after M1).
+            Git can no longer compute diffs from deleted commits, so these PRs may lose inline comments and become unreadable.
+
+        🚫 Open Pull Requests Must Be Merged/closed
+            Before rewriting history:
+            All open pull requests should be merged or closed.
+            PRs created before the cleanup refering old commits and may no longer APPLY cleanly or track from history so it is adviced to close all PR opened before cleanup as you may not want to see a broken diff or an approval issue on an Open PR (created before cleanup) post cleanup.
+            Open pull requests based on or containing commits with sensitive data will break after history rewrite, losing valid diffs or changes, and must be rebased or recreated.
+            After cleanup, developers should re-create PRs based on the new, cleaned history.
+
+        📦 Third-Party and Automation Concerns
+            Rewriting history changes all affected commit SHAs, which may:
+            Break CI/CD pipelines or scripts that depend on specific commit hashes.
+            Invalidate any automated deployment tools, audit logs, or integrations that rely on unchanged Git history.
+            Signed commits and tags will be lost — tools that rely on GPG or SLSA signatures will not be able to verify them.
+            If your organization does not use commit signatures, this won’t affect you.
+
+        🕵️ Potential for Misuse
+            Developers who have a stale local clone from before the cleanup can still access the sensitive data.
+            Skilled users can use Git tools to compare the old and new history and recover the removed content.
+            To fully mitigate this risk:
+            Communicate clearly that old clones must be discarded.
+            Consider revoking credentials or secrets that were previously expose (if possible).
+
+references
+https://git-scm.com/docs/git-filter-branch
+https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository
+https://rtyley.github.io/bfg-repo-cleaner/
